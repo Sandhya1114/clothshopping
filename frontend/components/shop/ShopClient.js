@@ -104,6 +104,7 @@ export default function ShopClient({
   const totalPages = Math.max(pagination.totalPages, 1);
   const currentCategoryLabel =
     filters.category === 'all' ? 'All categories' : formatCategoryLabel(filters.category);
+  const allCategoryCount = categories.reduce((total, category) => total + category.count, 0);
   const paginationPages = Array.from({ length: totalPages }, (_, index) => index + 1);
 
   return (
@@ -146,7 +147,10 @@ export default function ShopClient({
                 <button
                   type="button"
                   className="text-button filter-reset-button"
-                  onClick={() => setFilters({ ...initialFilters, category: initialCategory })}
+                  onClick={() => {
+                    setFilters({ ...initialFilters, category: initialCategory });
+                    setPage(1);
+                  }}
                 >
                   Reset
                 </button>
@@ -158,7 +162,7 @@ export default function ShopClient({
                   onClick={() => updateFilter('category', 'all')}
                 >
                   <span>All</span>
-                  <span>{pagination.totalItems}</span>
+                  <span>{String(allCategoryCount).padStart(2, '0')}</span>
                 </button>
                 {categories.map((category) => (
                   <button
@@ -251,9 +255,7 @@ export default function ShopClient({
                 <span className="eyebrow">Curated Selection</span>
                 <h2>{pagination.totalItems} pieces</h2>
               </div>
-              <p>
-                {currentCategoryLabel} · Page {pagination.page || 1} of {totalPages}
-              </p>
+              <p>{currentCategoryLabel} / Page {pagination.page || 1} of {totalPages}</p>
             </div>
 
             {isLoading ? <LoadingSpinner label="Loading products..." /> : null}
@@ -284,7 +286,7 @@ export default function ShopClient({
                     disabled={page === 1}
                     aria-label="Previous page"
                   >
-                    ‹
+                    {'<'}
                   </button>
                   <div className="pagination-pages">
                     {paginationPages.map((paginationPage) => (
@@ -306,7 +308,7 @@ export default function ShopClient({
                     disabled={pagination.page >= pagination.totalPages}
                     aria-label="Next page"
                   >
-                    ›
+                    {'>'}
                   </button>
                 </div>
               </>

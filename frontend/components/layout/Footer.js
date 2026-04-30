@@ -48,7 +48,13 @@ function NoteIcon() {
         strokeWidth="1.8"
         strokeLinejoin="round"
       />
-      <path d="M8 9h8M8 13h8M8 17h5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+      <path
+        d="M8 9h8M8 13h8M8 17h5"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
     </svg>
   );
 }
@@ -94,7 +100,7 @@ export default function Footer() {
 
       <div className="footer-bottom-bar">
         <div className="container footer-bottom-inner">
-          <p>© 2026 NorthStitch. All rights reserved.</p>
+          <p>Copyright 2026 NorthStitch. All rights reserved.</p>
           <div className="footer-bottom-links">
             <Link href="/privacy-policy">Privacy Policy</Link>
             <Link href="/terms">Terms</Link>

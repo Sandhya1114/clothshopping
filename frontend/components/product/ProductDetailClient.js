@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '@/components/common/LoadingSpinner';
-import { useCart } from '@/hooks/useCart';
 import ProductCard from '@/components/product/ProductCard';
+import { useCart } from '@/hooks/useCart';
 import { getProduct, getProducts } from '@/lib/api';
 import { formatCurrency } from '@/lib/format';
 
@@ -37,6 +37,8 @@ export default function ProductDetailClient({ productId }) {
     async function loadProduct() {
       try {
         setIsLoading(true);
+        setRelatedProducts([]);
+
         const response = await getProduct(productId);
         const item = response.product;
 
@@ -95,9 +97,9 @@ export default function ProductDetailClient({ productId }) {
       <div className="container section-spacing">
         <nav className="breadcrumb-trail" aria-label="Breadcrumb">
           <Link href="/">Home</Link>
-          <span>›</span>
+          <span>{'>'}</span>
           <Link href={`/${product.category}`}>{formattedCategory}</Link>
-          <span>›</span>
+          <span>{'>'}</span>
           <span>{product.name}</span>
         </nav>
 
@@ -114,7 +116,12 @@ export default function ProductDetailClient({ productId }) {
                   onClick={() => setSelectedImageIndex(index)}
                   aria-label={`View image ${index + 1}`}
                 >
-                  <Image src={image} alt={`${product.name} preview ${index + 1}`} fill className="product-image" />
+                  <Image
+                    src={image}
+                    alt={`${product.name} preview ${index + 1}`}
+                    fill
+                    className="product-image"
+                  />
                 </button>
               ))}
             </div>
@@ -137,9 +144,7 @@ export default function ProductDetailClient({ productId }) {
             </div>
 
             <div className="product-inline-meta">
-              <span className="product-star-row" aria-hidden="true">
-                ★★★★★
-              </span>
+              <span className="product-star-row">5-star edit</span>
               <span>{product.stock} available</span>
             </div>
 
