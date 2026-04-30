@@ -7,6 +7,59 @@ import { useAuth } from '@/hooks/useAuth';
 import { useCart } from '@/hooks/useCart';
 import { categories, mainNav } from '@/lib/site';
 
+function SearchIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="11" cy="11" r="6.5" fill="none" stroke="currentColor" strokeWidth="1.8" />
+      <path d="M16 16l5 5" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
+function BagIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M6 8.5h12l-.8 11.5H6.8L6 8.5z"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M9 9V7.6A3 3 0 0112 4.5a3 3 0 013 3.1V9"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function UserIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="8" r="3.25" fill="none" stroke="currentColor" strokeWidth="1.8" />
+      <path
+        d="M5.5 19a6.5 6.5 0 0113 0"
+        fill="none"
+        stroke="currentColor"
+        strokeWidth="1.8"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function MenuIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M4 7h16M4 12h16M4 17h16" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
+
 export default function Header() {
   const pathname = usePathname();
   const { itemCount } = useCart();
@@ -19,12 +72,9 @@ export default function Header() {
 
   return (
     <header className="site-header">
-      <div className="announcement-bar">
-        New season essentials, guest checkout, and clean mobile-first shopping flow.
-      </div>
       <div className="container header-shell">
         <Link href="/" className="brand-mark">
-          <span>North</span>Stitch
+          NorthStitch
         </Link>
 
         <nav className="desktop-nav" aria-label="Primary navigation">
@@ -40,28 +90,29 @@ export default function Header() {
         </nav>
 
         <div className="header-actions">
-          {isLoggedIn ? (
-            <>
-              <Link href="/account" className="account-pill">
-                {user.full_name.split(' ')[0]}
-              </Link>
-              <button type="button" className="account-pill account-logout" onClick={logoutUser}>
-                Log Out
-              </button>
-            </>
-          ) : (
-            <>
-              <Link href="/login" className="account-pill">
-                Log In
-              </Link>
-              <Link href="/signup" className="account-pill account-pill-primary">
-                Sign Up
-              </Link>
-            </>
-          )}
-          <Link href="/cart" className="cart-pill" aria-label={`Cart with ${itemCount} items`}>
-            Cart <span>{itemCount}</span>
+          <Link href="/shop" className="header-icon-link" aria-label="Search products">
+            <SearchIcon />
           </Link>
+          <Link href="/cart" className="header-icon-link header-cart-link" aria-label={`Cart with ${itemCount} items`}>
+            <BagIcon />
+            <span className="header-icon-badge">{itemCount}</span>
+          </Link>
+          <Link
+            href={isLoggedIn ? '/account' : '/login'}
+            className="header-icon-link"
+            aria-label={isLoggedIn ? `Account for ${user?.full_name || 'user'}` : 'Log in'}
+          >
+            <UserIcon />
+          </Link>
+          {isLoggedIn ? (
+            <button type="button" className="header-text-link" onClick={logoutUser}>
+              Log Out
+            </button>
+          ) : (
+            <Link href="/signup" className="header-text-link">
+              Join
+            </Link>
+          )}
           <button
             type="button"
             className="menu-button"
@@ -69,7 +120,7 @@ export default function Header() {
             aria-expanded={isMenuOpen}
             aria-label="Toggle menu"
           >
-            Menu
+            <MenuIcon />
           </button>
         </div>
       </div>
