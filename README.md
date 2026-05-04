@@ -137,6 +137,38 @@ npm run dev
 
 5. Open `http://localhost:3000`.
 
+## Deploy To Vercel
+
+Deploy this repository as two separate Vercel projects:
+
+1. Import the GitHub repository once for `frontend` and set the Root Directory to `frontend`.
+2. Import the same GitHub repository again for `backend` and set the Root Directory to `backend`.
+
+### Backend Vercel Environment Variables
+
+```env
+PORT=4000
+FRONTEND_URL=https://your-frontend.vercel.app,https://your-custom-domain.com
+SUPABASE_URL=https://your-project.supabase.co
+SUPABASE_SERVICE_ROLE_KEY=your-service-role-key
+JWT_SECRET=replace-with-a-long-random-secret
+```
+
+### Frontend Vercel Environment Variables
+
+```env
+NEXT_PUBLIC_API_BASE_URL=https://your-backend.vercel.app/api
+NEXT_PUBLIC_SITE_URL=https://your-frontend.vercel.app
+NEXT_PUBLIC_CHATBOT_URL=https://chatbot-v697.onrender.com
+```
+
+Production order:
+
+1. Deploy `backend` first and copy its live URL.
+2. Set `NEXT_PUBLIC_API_BASE_URL` in the `frontend` project to that backend URL plus `/api`.
+3. Deploy `frontend`.
+4. Update the backend `FRONTEND_URL` to your final frontend domain if needed and redeploy the backend.
+
 ## Key Frontend Files
 
 - [frontend/app/page.js](/d:/ClothingWebsite/frontend/app/page.js)

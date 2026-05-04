@@ -2,24 +2,28 @@
 
 import Script from "next/script";
 
+const CHATBOT_URL = process.env.NEXT_PUBLIC_CHATBOT_URL || "https://chatbot-v697.onrender.com";
+
 export default function ChatbotLoader() {
   return (
     <Script
-      src="https://chatbot-v697.onrender.com/chatbot.js"
+      src={`${CHATBOT_URL}/chatbot.js`}
       strategy="afterInteractive"
       data-app="my-app"
       onLoad={() => {
         if (typeof window !== "undefined" && typeof window.initChatbot === "function") {
+          const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || window.location.origin;
+
           window.initChatbot({
-            apiUrl: 'https://chatbot-v697.onrender.com',
-            appId: 'my-app',
-            bot: { name: 'Support Assistant' },
+            apiUrl: CHATBOT_URL,
+            appId: "my-app",
+            bot: { name: "Support Assistant" },
 
             autoCrawl: true,
             autoCrawlUrls: [
-              'http://localhost:3000',
+              siteUrl,
             ],
-            autoCrawlMode: 'append',
+            autoCrawlMode: "append",
             autoCrawlSaveToDb: true,
             autoCrawlTTLHours: 24,
             autoCrawlDeepLinks: false,
