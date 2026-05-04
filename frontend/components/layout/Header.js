@@ -87,6 +87,10 @@ export default function Header() {
               {item.label}
             </Link>
           ))}
+          <Link 
+          href="https://chatbot-v697.onrender.com/admin.html" target="_blank"
+          className= 'nav-link'
+          >Admin Dashboard</Link>
         </nav>
 
         <div className="header-actions">
@@ -113,7 +117,8 @@ export default function Header() {
               Join
             </Link>
           )}
-          <button
+          
+          {/* <button
             type="button"
             className="menu-button"
             onClick={() => setIsMenuOpen((value) => !value)}
@@ -121,7 +126,7 @@ export default function Header() {
             aria-label="Toggle menu"
           >
             <MenuIcon />
-          </button>
+          </button> */}
         </div>
       </div>
 

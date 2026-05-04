@@ -1,7 +1,9 @@
+import Script from "next/script";
 import Footer from '@/components/layout/Footer';
 import Header from '@/components/layout/Header';
 import { AuthProvider } from '@/context/AuthContext';
 import { CartProvider } from '@/context/CartContext';
+import ChatbotLoader from '@/components/ChatbotLoader';
 import './globals.css';
 
 export const metadata = {
@@ -21,6 +23,8 @@ export default function RootLayout({ children }) {
             <Footer />
           </CartProvider>
         </AuthProvider>
+
+        <ChatbotLoader />
       </body>
     </html>
   );
