@@ -1,5 +1,7 @@
 node_modules
 package-lock.json
+.next
+.vercel
 frontend/.next
 frontend/out
 frontend/node_modules
