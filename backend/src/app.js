@@ -10,10 +10,21 @@ import productRoutes from './routes/productRoutes.js';
 import { ApiError } from './utils/apiError.js';
 
 const app = express();
+const allowedOrigins = (process.env.FRONTEND_URL || 'http://localhost:3000')
+  .split(',')
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL || 'http://localhost:3000'
+    origin(origin, callback) {
+      if (!origin || allowedOrigins.includes('*') || allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new ApiError(`Origin ${origin} is not allowed by CORS`, 403));
+    }
   })
 );
 app.use(helmet());
