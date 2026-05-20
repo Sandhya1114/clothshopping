@@ -3,10 +3,18 @@
 import Script from "next/script";
 
 export default function ChatbotLoader() {
+  const chatbotHost =
+    (process.env.NEXT_PUBLIC_CHATBOT_URL || "https://chatbot-v697.onrender.com").replace(
+      /\/$/,
+      "",
+    );
+  const chatbotAppId =
+    process.env.NEXT_PUBLIC_CHATBOT_APP_ID || "northstitch-clothing-store";
+
   return (
     <Script
       id="northstitch-chatbot"
-      src="https://chatbot-v697.onrender.com/chatbot.js?v=20260505-1"
+      src={`${chatbotHost}/chatbot.js?v=20260505-1`}
       strategy="afterInteractive"
       onLoad={() => {
         if (typeof window === "undefined") return;
@@ -18,10 +26,11 @@ export default function ChatbotLoader() {
         if (window.__northstitchBot) return;
 
         window.__northstitchBot = window.initChatbot({
-          apiUrl: "https://chatbot-v697.onrender.com",
-          appId: "my-app",
+          apiUrl: window.location.origin,
+          appId: chatbotAppId,
           bot: {
-            name: "Support Assistant",
+            name: "NorthStitch Support",
+            status: "Online | Products, shipping, returns, and support",
           },
         });
       }}
